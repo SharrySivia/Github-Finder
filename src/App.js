@@ -1,11 +1,11 @@
 import React from "react";
-import SearchForm from "./SearchForm";
+import Finder from "./Finder";
 import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <SearchForm />
+      <Finder />
     </div>
   );
 }

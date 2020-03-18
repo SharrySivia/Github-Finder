@@ -15,7 +15,7 @@ class SearchForm extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    alert(this.state.userName);
+    this.props.getUser(this.state.userName);
   }
 
   render() {
