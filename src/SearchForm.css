@@ -1,2 +1,17 @@
 .SearchForm {
 }
+.SearchForm-input {
+  font-size: 1.2rem;
+}
+
+.suggestions {
+  width: 50%;
+  list-style: none;
+}
+
+.suggestions li {
+  background-color: #333;
+  color: #fff;
+  border-bottom: 1px solid #999;
+  cursor: pointer;
+}

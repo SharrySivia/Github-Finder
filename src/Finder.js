@@ -30,7 +30,7 @@ class Finder extends Component {
     return (
       <div>
         <h1>GitHub Finder..</h1>
-        <SearchForm getUser={this.getUser} />
+        <SearchForm getUserInfo={this.getUser} />
         {this.state.user ? (
           <UserCard
             userName={name}
