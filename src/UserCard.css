@@ -1,9 +1,11 @@
 .UserCard {
-  width: 100vw;
+  width: 90vw;
   display: flex;
   align-items: center;
-  padding: 1rem;
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.06);
+  padding: 2rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  border-radius: 10px;
 }
 
 .UserCard-userProfile {
@@ -28,7 +30,7 @@
 .UserCard-button {
   text-decoration: none;
   background-color: var(--color-secondary);
-  padding: 0.8rem 1.5rem;
+  padding: 0.5rem 1.2rem;
   border-radius: 5px;
   color: var(--color-light);
 }
@@ -42,9 +44,6 @@
   padding: 2rem;
   display: flex;
   flex-direction: column;
-}
-
-.UserCard-labelsContainer {
 }
 
 .UserCard-label {

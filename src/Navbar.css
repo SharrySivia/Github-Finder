@@ -1,0 +1,30 @@
+.Navbar {
+  width: 100vw;
+  background-color: var(--color-secondary);
+  padding: 1rem 4rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.Navbar a {
+  text-decoration: none;
+}
+
+.logo {
+  font-size: 1.5rem;
+  color: var(--color-light);
+  margin-right: 4rem;
+}
+
+.Navbar .link {
+  font-size: 1.1rem;
+  color: #99938a;
+  padding: 0.5rem 1rem;
+  transition: color 0.2s ease;
+}
+
+.Navbar .link:hover,
+.Navbar .link-active {
+  color: var(--color-light);
+}

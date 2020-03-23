@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import axios from "axios";
 import SearchForm from "./SearchForm";
 import UserCard from "./UserCard";
+import RepoCard from "./RepoCard";
 
 class Finder extends Component {
   constructor(props) {
     super(props);
-    this.state = { user: "", userRepos: [] };
+    this.state = { user: "", userRepos: [], showRepos: false };
     this.getUser = this.getUser.bind(this);
   }
 
@@ -17,6 +18,10 @@ class Finder extends Component {
     );
     const repos = reposRes.data.filter(r => r.fork === false);
     this.setState({ user: userRes.data, userRepos: repos });
+  }
+
+  checkValue(value) {
+    return value || "Null";
   }
 
   render() {
@@ -33,9 +38,20 @@ class Finder extends Component {
       bio,
       created_at
     } = this.state.user;
+
+    const repos = this.state.userRepos.map(repo => (
+      <RepoCard
+        key={repo.name}
+        name={repo.name}
+        description={this.checkValue(repo.description)}
+        numForks={repo.forks_count}
+        numWatchers={repo.watchers}
+        numStarts={repo.stargazers_count}
+        repoUrl={repo.html_url}
+      />
+    ));
     return (
       <div>
-        {/* Navbar goes here */}
         <SearchForm getUserInfo={this.getUser} />
         {this.state.user ? (
           <UserCard
@@ -45,13 +61,14 @@ class Finder extends Component {
             numFollowers={followers}
             numFollowing={following}
             numRepos={public_repos}
-            companyName={company}
-            blog={blog}
-            location={location}
-            bio={bio}
+            companyName={this.checkValue(company)}
+            blog={this.checkValue(blog)}
+            location={this.checkValue(location)}
+            bio={this.checkValue(bio)}
             memberSince={created_at}
           />
         ) : null}
+        {repos}
       </div>
     );
   }
