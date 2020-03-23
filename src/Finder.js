@@ -14,12 +14,18 @@ class Finder extends Component {
 
   async getUser(userName) {
     this.setState({ searching: true });
-    const userRes = await axios.get(`https://api.github.com/users/${userName}`);
-    const reposRes = await axios.get(
-      `https://api.github.com/users/${userName}/repos`
-    );
-    const repos = reposRes.data.filter(r => r.fork === false);
-    this.setState({ user: userRes.data, userRepos: repos, searching: false });
+    try {
+      const userRes = await axios.get(
+        `https://api.github.com/users/${userName}`
+      );
+      const reposRes = await axios.get(
+        `https://api.github.com/users/${userName}/repos`
+      );
+      const repos = reposRes.data.filter(r => r.fork === false);
+      this.setState({ user: userRes.data, userRepos: repos, searching: false });
+    } catch (err) {
+      this.setState({ searching: false });
+    }
   }
 
   checkValue(value) {
@@ -73,14 +79,12 @@ class Finder extends Component {
     return (
       <div>
         <SearchForm getUserInfo={this.getUser} />
-        {this.state.user ? (
-          this.state.searching ? (
-            <div class="spin-wrapper">
-              <div class="spinner"></div>
-            </div>
-          ) : (
-            this.renderUserCard(user)
-          )
+        {this.state.searching ? (
+          <div className="spin-wrapper">
+            <div className="spinner"></div>
+          </div>
+        ) : this.state.user ? (
+          this.renderUserCard(user)
         ) : null}
         {repos}
       </div>

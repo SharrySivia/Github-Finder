@@ -22,6 +22,7 @@
 
 .input-wrapper {
   width: 30%;
+  position: relative;
 }
 
 .SearchForm-input {
@@ -79,4 +80,26 @@
 
 .suggestions li:last-child {
   border-bottom: none;
+}
+
+.donut {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  border: 0.2rem solid var(--color-dark-light);
+  border-top-color: var(--color-secondary);
+  animation: 0.4s spin infinite linear;
+}
+
+.donut .multi {
+  border-bottom-color: var(--color-secondary);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

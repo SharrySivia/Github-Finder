@@ -1,5 +1,4 @@
 .Navbar {
-  width: 100vw;
   background-color: var(--color-secondary);
   padding: 1rem 4rem;
   display: flex;

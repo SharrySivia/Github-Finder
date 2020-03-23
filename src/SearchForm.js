@@ -16,18 +16,24 @@ class SearchForm extends Component {
   }
 
   getUser(userName) {
-    this.setState({ userName: userName, matched: [] });
+    this.setState({ userName: userName, matched: [], searching: false });
     this.props.getUserInfo(userName);
   }
 
   async searchUser() {
-    const res = await axios.get(
-      `https://api.github.com/search/users?q=${this.state.userName}`
-    );
-    const matchedNames = res.data.items.map(u => u.login);
-    this.setState({
-      matched: [...matchedNames]
-    });
+    this.setState({ searching: true });
+    try {
+      const res = await axios.get(
+        `https://api.github.com/search/users?q=${this.state.userName}`
+      );
+      const matchedNames = res.data.items.map(u => u.login);
+      this.setState({
+        matched: [...matchedNames],
+        searching: false
+      });
+    } catch (err) {
+      this.setState({ searching: false });
+    }
   }
 
   render() {
@@ -52,6 +58,7 @@ class SearchForm extends Component {
             onKeyUp={this.searchUser}
             autoFocus
           />
+          {this.state.searching && <div className="donut"></div>}
           {this.state.matched.length ? (
             <ul className="suggestions">{userNames}</ul>
           ) : null}
