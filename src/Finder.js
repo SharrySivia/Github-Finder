@@ -11,33 +11,45 @@ class Finder extends Component {
   }
 
   async getUser(userName) {
-    const UserRes = await axios.get(`https://api.github.com/users/${userName}`);
+    const userRes = await axios.get(`https://api.github.com/users/${userName}`);
     const reposRes = await axios.get(
       `https://api.github.com/users/${userName}/repos`
     );
     const repos = reposRes.data.filter(r => r.fork === false);
-    this.setState({ user: UserRes.data, userRepos: repos });
+    this.setState({ user: userRes.data, userRepos: repos });
   }
 
   render() {
     const {
       name,
       avatar_url,
+      html_url,
       followers,
       following,
-      public_repos
+      public_repos,
+      company,
+      blog,
+      location,
+      bio,
+      created_at
     } = this.state.user;
     return (
       <div>
-        <h1>GitHub Finder..</h1>
+        {/* Navbar goes here */}
         <SearchForm getUserInfo={this.getUser} />
         {this.state.user ? (
           <UserCard
             userName={name}
             imageSrc={avatar_url}
+            profileUrl={html_url}
             numFollowers={followers}
             numFollowing={following}
             numRepos={public_repos}
+            companyName={company}
+            blog={blog}
+            location={location}
+            bio={bio}
+            memberSince={created_at}
           />
         ) : null}
       </div>

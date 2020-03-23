@@ -1,0 +1,78 @@
+.UserCard {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.06);
+}
+
+.UserCard-userProfile {
+  width: 35%;
+  border-right: 1px solid var(--color-dark-light);
+}
+
+.UserCard-title {
+  color: var(--color-primary);
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.UserCard-image {
+  width: 200px;
+  height: 200px;
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.UserCard-button {
+  text-decoration: none;
+  background-color: var(--color-secondary);
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+  color: var(--color-light);
+}
+
+.UserCard-button:hover {
+  cursor: pointer;
+}
+
+.UserCard-profileDetails {
+  width: 65%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.UserCard-labelsContainer {
+}
+
+.UserCard-label {
+  width: 150px;
+  display: inline-block;
+  background-color: var(--color-secondary);
+  color: var(--color-light);
+  padding: 0.3rem 0;
+  border-radius: 50px;
+  text-align: center;
+  margin: 0 2rem 1rem 0rem;
+  font-size: 14px;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.05);
+  color: var(--color-light);
+}
+
+.UserCard-label:last-child {
+  margin-right: 0;
+}
+
+.UserCard-detailsGroup p {
+  font-size: 1.1rem;
+  padding: 0.2rem;
+  color: var(--color-secondary);
+}
+
+.UserCard-detailsGroup span {
+  margin-right: 0.5rem;
+  color: var(--color-primary);
+  font-weight: 500;
+}

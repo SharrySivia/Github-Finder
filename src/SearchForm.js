@@ -38,18 +38,24 @@ class SearchForm extends Component {
     ));
     return (
       <div className="SearchForm">
-        <input
-          className="SearchForm-input"
-          type="text"
-          placeholder="search user"
-          value={this.state.userName}
-          onChange={this.handleChange}
-          onKeyUp={this.searchUser}
-          autoFocus
-        />
-        {this.state.matched.length ? (
-          <ul className="suggestions">{userNames}</ul>
-        ) : null}
+        <h1 className="SearchForm-title">Search Github users</h1>
+        <p className="SearchForm-subtitle">
+          Enter username to fetch users profile info
+        </p>
+        <div className="input-wrapper">
+          <input
+            className="SearchForm-input"
+            type="text"
+            placeholder="Github username"
+            value={this.state.userName}
+            onChange={this.handleChange}
+            onKeyUp={this.searchUser}
+            autoFocus
+          />
+          {this.state.matched.length ? (
+            <ul className="suggestions">{userNames}</ul>
+          ) : null}
+        </div>
       </div>
     );
   }

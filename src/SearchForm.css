@@ -1,17 +1,81 @@
 .SearchForm {
+  width: 100vw;
 }
-.SearchForm-input {
+
+.SearchForm-title {
+  padding: 0;
+  color: var(--color-primary);
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.SearchForm-subtitle {
+  padding: 0;
+  color: var(--color-primary-light);
   font-size: 1.2rem;
+  letter-spacing: 1px;
+  margin-top: 0;
+}
+
+.input-wrapper {
+  width: 30%;
+}
+
+.SearchForm-input {
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.5rem;
+  outline: none;
+  border: 1px solid var(--color-secondary);
+  border-radius: 5px;
+  color: var(--color-secondary);
+  margin: 0;
 }
 
 .suggestions {
-  width: 50%;
+  width: 100%;
   list-style: none;
+  max-height: 20rem;
+  overflow: auto;
+  padding: 0;
+  margin: 0 auto;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.07);
+  border-radius: 5px;
+}
+
+.suggestions::-webkit-scrollbar {
+  width: 5px;
+}
+
+.suggestions::-webkit-scrollbar-track {
+  background: var(--color-dark-light);
+}
+
+.suggestions::-webkit-scrollbar-thumb {
+  background: rgb(165, 165, 165);
+  border-radius: 5px;
+}
+
+.suggestions::-webkit-scrollbar-thumb:hover {
+  background: var(--color-secondary);
 }
 
 .suggestions li {
-  background-color: #333;
-  color: #fff;
-  border-bottom: 1px solid #999;
+  padding: 0.8rem;
+  text-align: center;
+  background-color: #fff;
+  color: var(--color-secondary);
+  border-bottom: 1px solid var(--color-dark-light);
+  transition: background-color 0.2s ease;
+}
+
+.suggestions li:hover {
   cursor: pointer;
+  background-color: rgb(250, 250, 250);
+}
+
+.suggestions li:last-child {
+  border-bottom: none;
 }
