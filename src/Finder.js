@@ -3,28 +3,30 @@ import axios from "axios";
 import SearchForm from "./SearchForm";
 import UserCard from "./UserCard";
 import RepoCard from "./RepoCard";
+import "./Finder.css";
 
 class Finder extends Component {
   constructor(props) {
     super(props);
-    this.state = { user: "", userRepos: [], showRepos: false };
+    this.state = { user: "", userRepos: [], searching: false };
     this.getUser = this.getUser.bind(this);
   }
 
   async getUser(userName) {
+    this.setState({ searching: true });
     const userRes = await axios.get(`https://api.github.com/users/${userName}`);
     const reposRes = await axios.get(
       `https://api.github.com/users/${userName}/repos`
     );
     const repos = reposRes.data.filter(r => r.fork === false);
-    this.setState({ user: userRes.data, userRepos: repos });
+    this.setState({ user: userRes.data, userRepos: repos, searching: false });
   }
 
   checkValue(value) {
     return value || "Null";
   }
 
-  render() {
+  renderUserCard(user) {
     const {
       name,
       avatar_url,
@@ -37,8 +39,26 @@ class Finder extends Component {
       location,
       bio,
       created_at
-    } = this.state.user;
+    } = user;
+    return (
+      <UserCard
+        userName={name}
+        imageSrc={avatar_url}
+        profileUrl={html_url}
+        numFollowers={followers}
+        numFollowing={following}
+        numRepos={public_repos}
+        companyName={this.checkValue(company)}
+        blog={this.checkValue(blog)}
+        location={this.checkValue(location)}
+        bio={this.checkValue(bio)}
+        memberSince={created_at}
+      />
+    );
+  }
 
+  render() {
+    const { user } = this.state;
     const repos = this.state.userRepos.map(repo => (
       <RepoCard
         key={repo.name}
@@ -54,19 +74,13 @@ class Finder extends Component {
       <div>
         <SearchForm getUserInfo={this.getUser} />
         {this.state.user ? (
-          <UserCard
-            userName={name}
-            imageSrc={avatar_url}
-            profileUrl={html_url}
-            numFollowers={followers}
-            numFollowing={following}
-            numRepos={public_repos}
-            companyName={this.checkValue(company)}
-            blog={this.checkValue(blog)}
-            location={this.checkValue(location)}
-            bio={this.checkValue(bio)}
-            memberSince={created_at}
-          />
+          this.state.searching ? (
+            <div class="spin-wrapper">
+              <div class="spinner"></div>
+            </div>
+          ) : (
+            this.renderUserCard(user)
+          )
         ) : null}
         {repos}
       </div>
