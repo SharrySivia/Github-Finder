@@ -1,11 +1,17 @@
 import React, { Component } from "react";
+import { CSSTransitionGroup } from "react-transition-group";
 import axios from "axios";
 import "./SearchForm.css";
 
 class SearchForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { userName: "", matched: [] };
+    this.state = {
+      userName: "",
+      matched: [],
+      searching: false,
+      showSuggestions: false
+    };
     this.handleChange = this.handleChange.bind(this);
     this.searchUser = this.searchUser.bind(this);
     this.getUser = this.getUser.bind(this);
@@ -16,7 +22,7 @@ class SearchForm extends Component {
   }
 
   getUser(userName) {
-    this.setState({ userName: userName, matched: [], searching: false });
+    this.setState({ userName: userName, showSuggestions: false });
     this.props.getUserInfo(userName);
   }
 
@@ -29,7 +35,8 @@ class SearchForm extends Component {
       const matchedNames = res.data.items.map(u => u.login);
       this.setState({
         matched: [...matchedNames],
-        searching: false
+        searching: false,
+        showSuggestions: true
       });
     } catch (err) {
       this.setState({ searching: false });
@@ -37,7 +44,9 @@ class SearchForm extends Component {
   }
 
   render() {
-    let userNames = this.state.matched.map((userName, i) => (
+    const { userName, searching, matched, showSuggestions } = this.state;
+
+    let userNames = matched.map((userName, i) => (
       <li key={i} onClick={() => this.getUser(userName)}>
         {userName}
       </li>
@@ -53,15 +62,19 @@ class SearchForm extends Component {
             className="SearchForm-input"
             type="text"
             placeholder="Github username"
-            value={this.state.userName}
+            value={userName}
             onChange={this.handleChange}
             onKeyUp={this.searchUser}
             autoFocus
           />
-          {this.state.searching && <div className="donut"></div>}
-          {this.state.matched.length ? (
-            <ul className="suggestions">{userNames}</ul>
-          ) : null}
+          {searching && <div className="donut"></div>}
+          <CSSTransitionGroup
+            transitionName="suggestions"
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={300}
+          >
+            {showSuggestions && <ul className="suggestions">{userNames}</ul>}
+          </CSSTransitionGroup>
         </div>
       </div>
     );

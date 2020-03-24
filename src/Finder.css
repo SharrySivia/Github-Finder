@@ -50,3 +50,21 @@
     transform: rotate(360deg);
   }
 }
+
+.userInfo-enter {
+  opacity: 0.01;
+}
+
+.userInfo-enter.userInfo-enter-active {
+  opacity: 1;
+  transition: opacity 200ms ease-in;
+}
+
+.userInfo-leave {
+  opacity: 1;
+}
+
+.userInfo-leave.userInfo-leave-active {
+  opacity: 0.01;
+  transition: opacity 500ms ease-in;
+}

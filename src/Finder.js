@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { CSSTransitionGroup } from "react-transition-group";
 import axios from "axios";
 import SearchForm from "./SearchForm";
 import UserCard from "./UserCard";
@@ -8,64 +9,62 @@ import "./Finder.css";
 class Finder extends Component {
   constructor(props) {
     super(props);
-    this.state = { user: "", userRepos: [], searching: false };
+    this.state = {
+      user: "",
+      userRepos: [],
+      showUserInfo: false,
+      searching: false
+    };
     this.getUser = this.getUser.bind(this);
   }
 
-  async getUser(userName) {
-    this.setState({ searching: true });
-    try {
-      const userRes = await axios.get(
-        `https://api.github.com/users/${userName}`
-      );
-      const reposRes = await axios.get(
-        `https://api.github.com/users/${userName}/repos`
-      );
-      const repos = reposRes.data.filter(r => r.fork === false);
-      this.setState({ user: userRes.data, userRepos: repos, searching: false });
-    } catch (err) {
-      this.setState({ searching: false });
-    }
+  // REFACTOR THIS FUNCTION
+  getUser(userName) {
+    this.setState({ searching: true }, async () => {
+      try {
+        const userRes = await axios.get(
+          `https://api.github.com/users/${userName}`
+        );
+        const reposRes = await axios.get(
+          `https://api.github.com/users/${userName}/repos`
+        );
+        const repos = reposRes.data.filter(r => r.fork === false);
+        this.setState({
+          user: userRes.data,
+          userRepos: repos,
+          searching: false,
+          showUserInfo: true
+        });
+      } catch (err) {
+        this.setState({ searching: false });
+      }
+    });
   }
 
   checkValue(value) {
-    return value || "Null";
+    return value || "none ";
   }
 
   renderUserCard(user) {
-    const {
-      name,
-      avatar_url,
-      html_url,
-      followers,
-      following,
-      public_repos,
-      company,
-      blog,
-      location,
-      bio,
-      created_at
-    } = user;
     return (
       <UserCard
-        userName={name}
-        imageSrc={avatar_url}
-        profileUrl={html_url}
-        numFollowers={followers}
-        numFollowing={following}
-        numRepos={public_repos}
-        companyName={this.checkValue(company)}
-        blog={this.checkValue(blog)}
-        location={this.checkValue(location)}
-        bio={this.checkValue(bio)}
-        memberSince={created_at}
+        userName={user.name}
+        imageSrc={user.avatar_url}
+        profileUrl={user.html_url}
+        numFollowers={user.followers}
+        numFollowing={user.following}
+        numRepos={user.public_repos}
+        companyName={this.checkValue(user.company)}
+        blog={this.checkValue(user.blog)}
+        location={this.checkValue(user.location)}
+        bio={this.checkValue(user.bio)}
+        memberSince={user.created_at}
       />
     );
   }
 
-  render() {
-    const { user } = this.state;
-    const repos = this.state.userRepos.map(repo => (
+  renderUserRepos(repos) {
+    return repos.map(repo => (
       <RepoCard
         key={repo.name}
         name={repo.name}
@@ -76,17 +75,27 @@ class Finder extends Component {
         repoUrl={repo.html_url}
       />
     ));
+  }
+
+  render() {
+    const { user, searching, showUserInfo, userRepos } = this.state;
     return (
       <div>
         <SearchForm getUserInfo={this.getUser} />
-        {this.state.searching ? (
-          <div className="spin-wrapper">
-            <div className="spinner"></div>
-          </div>
-        ) : this.state.user ? (
-          this.renderUserCard(user)
-        ) : null}
-        {repos}
+        <CSSTransitionGroup
+          transitionName="userInfo"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={300}
+        >
+          {searching && (
+            <div className="spin-wrapper">
+              <div className="spinner"></div>
+            </div>
+          )}
+
+          {showUserInfo && this.renderUserCard(user)}
+          {showUserInfo && this.renderUserRepos(userRepos)}
+        </CSSTransitionGroup>
       </div>
     );
   }
