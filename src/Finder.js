@@ -26,7 +26,7 @@ class Finder extends Component {
           `https://api.github.com/users/${userName}`
         );
         const reposRes = await axios.get(
-          `https://api.github.com/users/${userName}/repos`
+          `https://api.github.com/users/${userName}/repos?sort=created&direction=desc&per_page=5`
         );
         const repos = reposRes.data.filter(r => r.fork === false);
         this.setState({
@@ -36,7 +36,7 @@ class Finder extends Component {
           showUserInfo: true
         });
       } catch (err) {
-        this.setState({ searching: false });
+        // this.setState({ searching: false });
       }
     });
   }

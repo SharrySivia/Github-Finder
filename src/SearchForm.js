@@ -30,7 +30,7 @@ class SearchForm extends Component {
     this.setState({ searching: true });
     try {
       const res = await axios.get(
-        `https://api.github.com/search/users?q=${this.state.userName}`
+        `https://api.github.com/search/users?q=${this.state.userName}&per_page=15`
       );
       const matchedNames = res.data.items.map(u => u.login);
       this.setState({
