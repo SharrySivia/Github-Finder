@@ -36,7 +36,7 @@ class Finder extends Component {
           showUserInfo: true
         });
       } catch (err) {
-        // this.setState({ searching: false });
+        this.setState({ searching: false });
       }
     });
   }
@@ -48,7 +48,7 @@ class Finder extends Component {
   renderUserCard(user) {
     return (
       <UserCard
-        userName={user.name}
+        userName={user.login}
         imageSrc={user.avatar_url}
         profileUrl={user.html_url}
         numFollowers={user.followers}

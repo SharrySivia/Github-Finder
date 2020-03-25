@@ -12,12 +12,13 @@ class SearchForm extends Component {
       searching: false,
       showSuggestions: false
     };
+    this.searchTimeOut = 0;
     this.handleChange = this.handleChange.bind(this);
     this.searchUser = this.searchUser.bind(this);
     this.getUser = this.getUser.bind(this);
   }
 
-  async handleChange(evt) {
+  handleChange(evt) {
     this.setState({ userName: evt.target.value });
   }
 
@@ -26,20 +27,30 @@ class SearchForm extends Component {
     this.props.getUserInfo(userName);
   }
 
-  async searchUser() {
-    this.setState({ searching: true });
-    try {
-      const res = await axios.get(
-        `https://api.github.com/search/users?q=${this.state.userName}&per_page=15`
-      );
-      const matchedNames = res.data.items.map(u => u.login);
-      this.setState({
-        matched: [...matchedNames],
-        searching: false,
-        showSuggestions: true
-      });
-    } catch (err) {
-      this.setState({ searching: false });
+  searchUser(evt) {
+    if (this.searchTimeOut) clearTimeout(this.searchTimeOut);
+    if (evt.target.value && evt.keyCode !== 8) {
+      this.searchTimeOut = setTimeout(async () => {
+        this.setState({ searching: true, showSuggestions: false });
+        try {
+          const res = await axios({
+            method: "get",
+            url: `https://api.github.com/search/users?q=${this.state.userName}&per_page=25`,
+            headers: {
+              Accept: "application/vnd.github.v3.text-match+json"
+            }
+          });
+
+          const matchedNames = res.data.items.map(u => u.login);
+          this.setState({
+            matched: [...matchedNames],
+            searching: false,
+            showSuggestions: true
+          });
+        } catch (err) {
+          this.setState({ searching: false });
+        }
+      }, 500);
     }
   }
 
