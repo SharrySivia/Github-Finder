@@ -50,7 +50,7 @@ class UserCard extends Component {
             </p>
             <p>
               <span>Member Since:</span>
-              {memberSince}
+              {memberSince.slice(0, 10)}
             </p>
           </div>
         </div>

@@ -29,13 +29,18 @@ class SearchForm extends Component {
 
   searchUser(evt) {
     if (this.searchTimeOut) clearTimeout(this.searchTimeOut);
+    this.setState({ showSuggestions: false });
     if (evt.target.value && evt.keyCode !== 8) {
       this.searchTimeOut = setTimeout(async () => {
-        this.setState({ searching: true, showSuggestions: false });
+        this.setState({ searching: true });
         try {
           const res = await axios({
             method: "get",
             url: `https://api.github.com/search/users?q=${this.state.userName}&per_page=25`,
+            data: {
+              client_id: "e7fb68779637c8fcc5ba",
+              client_secret: "d8da657787e439861517f784a587b0e098ab3b6a"
+            },
             headers: {
               Accept: "application/vnd.github.v3.text-match+json"
             }
@@ -50,7 +55,7 @@ class SearchForm extends Component {
         } catch (err) {
           this.setState({ searching: false });
         }
-      }, 500);
+      }, 300);
     }
   }
 

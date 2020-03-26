@@ -1,14 +1,22 @@
-.spin-wrapper {
-  position: relative;
-  width: 100%;
-  height: 50vh;
+.Finder {
+  width: 90vw;
+  margin: 0 auto;
 }
+
+.title {
+  color: var(--color-primary);
+  margin-bottom: 0;
+  margin-top: 3rem;
+  font-weight: 500;
+}
+
 .spinner {
   position: absolute;
-  height: 60px;
-  width: 60px;
+  height: 80px;
+  width: 80px;
   border: 3px solid transparent;
-  border-top-color: #a04668;
+  /* border-top-color: #a04668; */
+  border-top-color: var(--color-secondary);
   top: 50%;
   left: 50%;
   margin: -30px;
@@ -25,7 +33,8 @@
 }
 
 .spinner:before {
-  border-top-color: #254e70;
+  /* border-top-color: #254e70; */
+  border-top-color: var(--color-secondary);
   top: -12px;
   left: -12px;
   right: -12px;
@@ -34,7 +43,8 @@
 }
 
 .spinner:after {
-  border-top-color: #ff94e4;
+  /* border-top-color: #ff94e4; */
+  border-top-color: var(--color-secondary);
   top: 6px;
   left: 6px;
   right: 6px;
@@ -66,5 +76,5 @@
 
 .userInfo-leave.userInfo-leave-active {
   opacity: 0.01;
-  transition: opacity 500ms ease-in;
+  transition: opacity 200ms ease-in;
 }

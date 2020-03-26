@@ -6,6 +6,10 @@ import UserCard from "./UserCard";
 import RepoCard from "./RepoCard";
 import "./Finder.css";
 
+const API_URL = "https://api.github.com/";
+const clientId = "e7fb68779637c8fcc5ba";
+const clientSecret = "d8da657787e439861517f784a587b0e098ab3b6a";
+
 class Finder extends Component {
   constructor(props) {
     super(props);
@@ -20,14 +24,24 @@ class Finder extends Component {
 
   // REFACTOR THIS FUNCTION
   getUser(userName) {
-    this.setState({ searching: true }, async () => {
+    this.setState({ searching: true, showUserInfo: false }, async () => {
       try {
-        const userRes = await axios.get(
-          `https://api.github.com/users/${userName}`
-        );
-        const reposRes = await axios.get(
-          `https://api.github.com/users/${userName}/repos?sort=created&direction=desc&per_page=5`
-        );
+        const userRes = await axios({
+          method: "get",
+          url: `${API_URL}users/${userName}`,
+          data: {
+            client_id: clientId,
+            client_secret: clientSecret
+          }
+        });
+        const reposRes = await axios({
+          method: "get",
+          url: `${API_URL}users/${userName}/repos?sort=created&direction=desc&per_page=5`,
+          data: {
+            client_id: clientId,
+            client_secret: clientSecret
+          }
+        });
         const repos = reposRes.data.filter(r => r.fork === false);
         this.setState({
           user: userRes.data,
@@ -80,21 +94,21 @@ class Finder extends Component {
   render() {
     const { user, searching, showUserInfo, userRepos } = this.state;
     return (
-      <div>
+      <div className="Finder">
         <SearchForm getUserInfo={this.getUser} />
         <CSSTransitionGroup
           transitionName="userInfo"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={300}
+          transitionEnterTimeout={300}
+          transitionLeaveTimeout={150}
         >
+          {showUserInfo && this.renderUserCard(user)}
+          {showUserInfo && <h1 className="title">Latest Repos</h1>}
+          {showUserInfo && this.renderUserRepos(userRepos)}
           {searching && (
             <div className="spin-wrapper">
               <div className="spinner"></div>
             </div>
           )}
-
-          {showUserInfo && this.renderUserCard(user)}
-          {showUserInfo && this.renderUserRepos(userRepos)}
         </CSSTransitionGroup>
       </div>
     );

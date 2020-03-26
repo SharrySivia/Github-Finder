@@ -1,9 +1,14 @@
 .Navbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
   background-color: var(--color-secondary);
   padding: 1rem 4rem;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  z-index: 1;
 }
 
 .Navbar a {
