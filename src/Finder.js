@@ -6,7 +6,6 @@ import UserCard from "./UserCard";
 import RepoCard from "./RepoCard";
 import "./Finder.css";
 
-const API_URL = "https://api.github.com/";
 const clientId = "e7fb68779637c8fcc5ba";
 const clientSecret = "d8da657787e439861517f784a587b0e098ab3b6a";
 
@@ -16,43 +15,73 @@ class Finder extends Component {
     this.state = {
       user: "",
       userRepos: [],
+      repo: [],
       showUserInfo: false,
-      searching: false
+      searching: false,
+      showRepoInfo: false
     };
     this.getUser = this.getUser.bind(this);
+    this.getRepo = this.getRepo.bind(this);
   }
 
-  // REFACTOR THIS FUNCTION
-  getUser(userName) {
-    this.setState({ searching: true, showUserInfo: false }, async () => {
-      try {
-        const userRes = await axios({
-          method: "get",
-          url: `${API_URL}users/${userName}`,
-          data: {
-            client_id: clientId,
-            client_secret: clientSecret
-          }
-        });
-        const reposRes = await axios({
-          method: "get",
-          url: `${API_URL}users/${userName}/repos?sort=created&direction=desc&per_page=5`,
-          data: {
-            client_id: clientId,
-            client_secret: clientSecret
-          }
-        });
-        const repos = reposRes.data.filter(r => r.fork === false);
-        this.setState({
-          user: userRes.data,
-          userRepos: repos,
-          searching: false,
-          showUserInfo: true
-        });
-      } catch (err) {
-        this.setState({ searching: false });
+  getUser(profileUrl, reposUrl) {
+    this.setState(
+      { searching: true, showUserInfo: false, showRepoInfo: false },
+      async () => {
+        try {
+          const userRes = await axios({
+            method: "get",
+            url: `${profileUrl}`,
+            data: {
+              client_id: clientId,
+              client_secret: clientSecret
+            }
+          });
+          const reposRes = await axios({
+            method: "get",
+            url: `${reposUrl}?sort=created&direction=desc&per_page=5`,
+            data: {
+              client_id: clientId,
+              client_secret: clientSecret
+            }
+          });
+          const userRepositories = reposRes.data.filter(r => r.fork === false);
+          this.setState({
+            user: userRes.data,
+            userRepos: userRepositories,
+            searching: false,
+            showUserInfo: true
+          });
+        } catch (err) {
+          this.setState({ searching: false });
+        }
       }
-    });
+    );
+  }
+
+  getRepo(repoUrl) {
+    this.setState(
+      { searching: true, showRepoInfo: false, showUserInfo: false },
+      async () => {
+        try {
+          const res = await axios({
+            method: "get",
+            url: `${repoUrl}`,
+            data: {
+              client_id: clientId,
+              client_secret: clientSecret
+            }
+          });
+          this.setState({
+            searching: false,
+            repo: res.data,
+            showRepoInfo: true
+          });
+        } catch (err) {
+          alert(err);
+        }
+      }
+    );
   }
 
   checkValue(value) {
@@ -91,11 +120,40 @@ class Finder extends Component {
     ));
   }
 
+  renderRepoDetails(repo) {
+    return (
+      <RepoCard
+        key={repo.name}
+        name={repo.name}
+        description={this.checkValue(repo.description)}
+        numForks={repo.forks_count}
+        numWatchers={repo.watchers}
+        numStarts={repo.stargazers_count}
+        repoUrl={repo.html_url}
+      />
+    );
+  }
+
   render() {
-    const { user, searching, showUserInfo, userRepos } = this.state;
+    const {
+      user,
+      searching,
+      showUserInfo,
+      userRepos,
+      repo,
+      showRepoInfo
+    } = this.state;
+
+    const { search } = this.props;
     return (
       <div className="Finder">
-        <SearchForm getUserInfo={this.getUser} />
+        <SearchForm
+          getUserInfo={this.getUser}
+          getRepoInfo={this.getRepo}
+          clientId={clientId}
+          clientSecret={clientSecret}
+          searchFor={search}
+        />
         <CSSTransitionGroup
           transitionName="userInfo"
           transitionEnterTimeout={300}
@@ -104,6 +162,7 @@ class Finder extends Component {
           {showUserInfo && this.renderUserCard(user)}
           {showUserInfo && <h1 className="title">Latest Repos</h1>}
           {showUserInfo && this.renderUserRepos(userRepos)}
+          {showRepoInfo && this.renderRepoDetails(repo)}
           {searching && (
             <div className="spin-wrapper">
               <div className="spinner"></div>

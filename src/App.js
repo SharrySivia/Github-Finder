@@ -7,11 +7,12 @@ function App() {
   return (
     <div>
       <Navbar />
-      <Route exact path="/searchUser" component={Finder} />
       <Route
         exact
-        path="/searchRepo"
-        render={() => <h1>Under Construction!!!!</h1>}
+        path="/:search"
+        render={routerProps => (
+          <Finder search={routerProps.match.params.search} />
+        )}
       />
       <Redirect to="/searchUser" />
     </div>
