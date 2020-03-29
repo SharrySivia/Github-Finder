@@ -1,7 +1,7 @@
 .UserCard {
   display: flex;
   align-items: center;
-  padding: 2rem;
+  padding: 2.5rem;
   box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
   margin: 0;
   border-radius: 10px;
@@ -13,23 +13,25 @@
 }
 
 .UserCard-title {
+  font-size: 2.7rem;
   color: var(--color-primary);
   font-weight: 500;
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .UserCard-image {
   width: 200px;
   height: 200px;
   display: block;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 .UserCard-button {
+  font-size: 1.5rem;
   text-decoration: none;
   background-color: var(--color-secondary);
-  padding: 0.5rem 1.2rem;
+  padding: 1rem 2rem;
   border-radius: 5px;
   color: var(--color-light);
 }
@@ -40,21 +42,21 @@
 
 .UserCard-profileDetails {
   width: 65%;
-  padding: 0 2rem;
+  padding-left: 3rem;
   display: flex;
   flex-direction: column;
 }
 
 .UserCard-label {
-  width: 150px;
+  width: 15rem;
   display: inline-block;
   background-color: var(--color-secondary);
   color: var(--color-light);
-  padding: 0.3rem 0;
+  padding: 0.5rem 0;
   border-radius: 50px;
   text-align: center;
-  margin: 0 2rem 1rem 0rem;
-  font-size: 14px;
+  margin: 0 2rem 2rem 0rem;
+  font-size: 1.6rem;
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.05);
   color: var(--color-light);
 }
@@ -64,13 +66,51 @@
 }
 
 .UserCard-detailsGroup p {
-  font-size: 1.1rem;
+  font-size: 1.8rem;
   padding: 0.2rem;
   color: var(--color-secondary);
 }
 
 .UserCard-detailsGroup span {
-  margin-right: 0.5rem;
+  margin-right: 1rem;
   color: var(--color-primary);
   font-weight: 500;
+}
+
+@media (max-width: 992px) {
+  .UserCard-image {
+    width: 150px;
+    height: 150px;
+  }
+  .UserCard-label {
+    width: 15rem;
+    padding: 0.5rem 0;
+    font-size: 1.5rem;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.05);
+    color: var(--color-light);
+  }
+}
+
+@media (max-width: 576px) {
+  .UserCard {
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 1 4rem;
+  }
+  .UserCard-userProfile {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid var(--color-dark-light);
+    padding-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .UserCard-profileDetails {
+    width: 100%;
+    padding: 0;
+    padding-top: 2rem;
+  }
 }

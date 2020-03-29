@@ -4,12 +4,12 @@
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
-  padding: 2rem;
+  padding: 3rem;
   border-radius: 10px;
 }
 
 .RepoCard-title {
-  font-size: 1.1rem;
+  font-size: 1.8rem;
   width: 50%;
   margin: 0;
   color: var(--color-secondary);
@@ -21,27 +21,59 @@
 }
 
 .RepoCard-labelsContainer {
-  width: 30%;
+  width: 35%;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 }
 
 .label {
-  width: 100px;
+  width: 30%;
   background-color: var(--color-secondary);
   border-radius: 50px;
   text-align: center;
   color: var(--color-light);
-  padding: 0.2rem 0;
-  font-size: 14px;
+  padding: 0.5rem 0.5rem;
+  font-size: 1.5rem;
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.05);
 }
 
 .RepoCard-button {
+  font-size: 1.5rem;
   text-decoration: none;
   background-color: var(--color-secondary);
-  padding: 0.5rem 1.2rem;
+  padding: 1rem 2rem;
   border-radius: 5px;
   color: var(--color-light);
+}
+
+@media (max-width: 1200px) {
+  .RepoCard-title {
+    width: 40%;
+  }
+  .RepoCard-labelsContainer {
+    width: 40%;
+  }
+}
+
+@media (max-width: 992px) {
+  .label {
+    padding: 0.5rem 0.2rem;
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .RepoCard-title {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+  .RepoCard-labelsContainer {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+  .RepoCard {
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
 }

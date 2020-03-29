@@ -4,7 +4,7 @@
   top: 0;
   left: 0;
   background-color: var(--color-secondary);
-  padding: 1rem 4rem;
+  padding: 1.6rem 5rem;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -16,13 +16,13 @@
 }
 
 .logo {
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: var(--color-light);
   margin-right: 4rem;
 }
 
 .Navbar .link {
-  font-size: 1.1rem;
+  font-size: 1.8rem;
   color: #99938a;
   padding: 0.5rem 1rem;
   transition: color 0.2s ease;
@@ -31,4 +31,10 @@
 .Navbar .link:hover,
 .Navbar .link-active {
   color: var(--color-light);
+}
+
+@media (max-width: 576px) {
+  .Navbar {
+    padding: 1.6rem 2.7rem;
+  }
 }

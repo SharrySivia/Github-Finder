@@ -1,12 +1,14 @@
 .Finder {
   width: 90vw;
   margin: 0 auto;
+  padding-top: 3rem;
 }
 
 .title {
+  font-size: 2.7rem;
   color: var(--color-primary);
   margin-bottom: 0;
-  margin-top: 3rem;
+  margin-top: 5rem;
   font-weight: 500;
 }
 
