@@ -66,14 +66,15 @@
 @media (max-width: 768px) {
   .RepoCard-title {
     width: 100%;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
   }
   .RepoCard-labelsContainer {
     width: 100%;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
   }
   .RepoCard {
     flex-direction: column;
     justify-content: space-evenly;
+    padding: 2.3rem;
   }
 }

@@ -1,5 +1,5 @@
 .SearchForm {
-  margin: 6rem 0 2rem 0;
+  margin: 8rem 0 2rem 0;
 }
 
 .SearchForm-title {
@@ -67,7 +67,7 @@
 
 .suggestions li {
   font-size: 1.8rem;
-  padding: 0.8rem;
+  padding: 1.5rem 0.8rem;
   text-align: center;
   background-color: #fff;
   color: var(--color-secondary);
@@ -129,8 +129,11 @@
     width: 50%;
   }
   .SearchForm-title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     margin-bottom: 0.3rem;
+  }
+  .SearchForm-subtitle {
+    font-size: 1.5rem;
   }
 }
 

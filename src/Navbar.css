@@ -21,7 +21,8 @@
   margin-right: 4rem;
 }
 
-.Navbar .link {
+.Navbar .link,
+.link:active {
   font-size: 1.8rem;
   color: #99938a;
   padding: 0.5rem 1rem;
@@ -35,6 +36,9 @@
 
 @media (max-width: 576px) {
   .Navbar {
-    padding: 1.6rem 2.7rem;
+    padding: 1.4rem 2rem;
+  }
+  .logo {
+    margin-right: 2rem;
   }
 }

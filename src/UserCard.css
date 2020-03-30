@@ -98,6 +98,10 @@
     justify-content: space-evenly;
     padding: 1 4rem;
   }
+  .UserCard-image {
+    width: 120px;
+    height: 120px;
+  }
   .UserCard-userProfile {
     width: 100%;
     border: none;
@@ -111,6 +115,10 @@
   .UserCard-profileDetails {
     width: 100%;
     padding: 0;
-    padding-top: 2rem;
+    padding-top: 3rem;
+  }
+  .UserCard-label {
+    width: 10rem;
+    padding: 0.5rem 0.8rem;
   }
 }
