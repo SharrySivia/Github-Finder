@@ -76,12 +76,13 @@ class SearchForm extends Component {
         try {
           const res = await axios({
             method: "get",
-            url: `https://api.github.com/search/repositories?q=${this.state.searchQuery}&per_page=25`,
+            url: `https://api.github.com/search/repositories?q=${this.state.searchQuery}&per_page=25&sort=stars&order=desc`,
             data: {
               client_id: this.props.clientID,
               client_secret: this.props.clientSecret
             }
           });
+          console.log(res.data);
 
           const matchedRepos = res.data.items.map(r => ({
             name: r.name,
