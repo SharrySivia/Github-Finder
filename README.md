@@ -1,4 +1,4 @@
-[liveDemo](https://nostalgic-edison-590df7.netlify.com)
+[Live_Demo](https://nostalgic-edison-590df7.netlify.com){:target="\_blank"}
 
 ## Available Scripts
 
