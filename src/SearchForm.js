@@ -82,7 +82,6 @@ class SearchForm extends Component {
               client_secret: this.props.clientSecret
             }
           });
-          console.log(res.data);
 
           const matchedRepos = res.data.items.map(r => ({
             name: r.name,
