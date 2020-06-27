@@ -6,8 +6,9 @@ import UserCard from "./UserCard";
 import RepoCard from "./RepoCard";
 import "./Finder.css";
 
-const clientId = "e7fb68779637c8fcc5ba";
-const clientSecret = "d8da657787e439861517f784a587b0e098ab3b6a";
+const clientId=process.env.REACT_APP_CLIENTID
+const clientSecret=process.env.REACT_APP_CLIENT_SECRET
+
 
 class Finder extends Component {
   constructor(props) {
