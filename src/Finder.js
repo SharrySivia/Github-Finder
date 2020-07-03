@@ -6,8 +6,9 @@ import UserCard from "./UserCard";
 import RepoCard from "./RepoCard";
 import "./Finder.css";
 
-const clientId = "e7fb68779637c8fcc5ba";
-const clientSecret = "d8da657787e439861517f784a587b0e098ab3b6a";
+const clientId=process.env.REACT_APP_CLIENTID
+const clientSecret=process.env.REACT_APP_CLIENT_SECRET
+
 
 class Finder extends Component {
   constructor(props) {
@@ -24,62 +25,51 @@ class Finder extends Component {
     this.getRepo = this.getRepo.bind(this);
   }
 
+
   getUser(profileUrl, reposUrl) {
     this.setState(
       { searching: true, showUserInfo: false, showRepoInfo: false },
       async () => {
         try {
-          const userRes = await axios({
-            method: "get",
-            url: `${profileUrl}`,
-            data: {
-              client_id: clientId,
-              client_secret: clientSecret
+            // search user query
+            const userQuery = axiosQuery(profileUrl)
+
+            // search repo's query
+            const repoQuery = axiosQuery(`${reposUrl}?sort=created&direction=desc&per_page=5`)
+            
+            // using Promise.all to make multiple req at once
+            const [userRes,reposRes] = await Promise.all([userQuery,repoQuery])   
+
+            // save data in state
+            this.setState({
+                user: userRes.data,
+                userRepos: reposRes.data.filter(r => r.fork === false),
+                searching: false,
+                showUserInfo: true
+            });
+            } catch (err) {
+            this.setState({ searching: false });
             }
-          });
-          const reposRes = await axios({
-            method: "get",
-            url: `${reposUrl}?sort=created&direction=desc&per_page=5`,
-            data: {
-              client_id: clientId,
-              client_secret: clientSecret
-            }
-          });
-          const userRepositories = reposRes.data.filter(r => r.fork === false);
-          this.setState({
-            user: userRes.data,
-            userRepos: userRepositories,
-            searching: false,
-            showUserInfo: true
-          });
-        } catch (err) {
-          this.setState({ searching: false });
-        }
       }
+      
     );
   }
 
   getRepo(repoUrl) {
     this.setState(
       { searching: true, showRepoInfo: false, showUserInfo: false },
-      async () => {
-        try {
-          const res = await axios({
-            method: "get",
-            url: `${repoUrl}`,
-            data: {
-              client_id: clientId,
-              client_secret: clientSecret
-            }
-          });
-          this.setState({
-            searching: false,
-            repo: res.data,
-            showRepoInfo: true
-          });
-        } catch (err) {
-          alert(err);
-        }
+     () => {
+          axiosQuery(repoUrl).then(res=>{
+            this.setState({
+                searching: false,
+                repo: res.data,
+                showRepoInfo: true
+            });
+          }).catch(err=>{
+              console.log(err.message)
+          })
+          
+       
       }
     );
   }
@@ -175,3 +165,14 @@ class Finder extends Component {
 }
 
 export default Finder;
+
+function axiosQuery(url){
+    return axios({
+            method: "get",
+            url,
+            data: {
+              client_id: clientId,
+              client_secret: clientSecret
+            }
+          })
+}
