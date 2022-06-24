@@ -1,5 +1,4 @@
 # Github Finder
-[Live Demo](https://nostalgic-edison-590df7.netlify.com)
 
 ## Available Scripts
 
